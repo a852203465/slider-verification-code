@@ -96,9 +96,9 @@ public class SliderController {
 
             // 验证成功
             responseVO = ResponseVO.success();
-        }
 
-        redisUtils.del(verificationDTO.getCapcode());
+            redisUtils.del(verificationDTO.getCapcode());
+        }
 
         return responseVO;
     }
