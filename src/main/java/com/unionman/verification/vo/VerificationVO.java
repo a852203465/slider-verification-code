@@ -32,6 +32,4 @@ public class VerificationVO implements Serializable {
      */
     private Integer yHeight;
 
-    private String capcode;
-
 }

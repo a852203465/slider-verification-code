@@ -4,71 +4,48 @@
     <title>滑动验证码</title>
     <link rel="stylesheet" href="/css/slide.css">
     <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/jquery.lgyslide.js"></script>
+    <script src="/js/slide.js"></script>
 
 </head>
 <body>
-<div id="imgscode"></div>
+<div id="imgscode">
+    <div class="bxs-row">
+        <input type="text" class="username" id="username" placeholder="用户名" value="admin">
+        <p class=" err err-username"></p>
+        <input type="text" class="password" id="password" placeholder="密码">
+        <p class="err err-password"></p>
+    </div>
+    <div class="code-k-div">
+        <div class="code_bg"></div>
+        <div class="code-con">
+            <div class="code-img">
+                <div class="code-img-con">
+                    <div class="code-mask">
+                        <img class="code-front-img" src="">
+                    </div>
+                    <img class="code-back-img" src="">
+                </div>
+                <div class="code-push">
+                    <i class="icon-login-bg icon-w-25 icon-push">刷新</i>
+                    <span class="code-tip"></span>
+                </div>
+            </div>
+            <div class="code-btn">
+                <div class="code-btn-img code-btn-m"></div>
+                <span class="code-span">按住滑块，拖动完成上方拼图</span>
+            </div>
+        </div>
+    </div>
+    <div class="bxs-row">
+        <button type="submit" class="button" onclick="submit()">登录</button>
+    </div>
+
+
+</div>
 <script>
     $(function () {
-        setTimeout(function () {
-            createcode();
-        }, 1000)
+        createCode();
     }());
-
-    //显示验证码
-    function createcode() {
-        $.ajax({
-            type: 'GET',
-            url: '/getPic',
-            dataType: 'json',
-            success: function (success) {
-                if (success != null) {
-                    data = success.data;
-                    $("#imgscode").imgcode({
-                        frontimg: 'data:image/png;base64,' + data.slidingImage,
-                        backimg: 'data:image/png;base64,' + data.originalImage,
-                        yHeight: data.yHeight,
-                        refreshcallback: function () {
-                            //刷新验证码
-                            createcode();
-                        },
-                        callback: function (msg) {
-                            console.log(msg);
-                            var $this = this;
-                            $.ajax({
-                                type: 'POST',
-                                url: '/checkcapcode',
-                                contentType: "application/json",
-                                dataType: "json",
-                                data: JSON.stringify({
-                                    "xpos": msg.xpos,
-                                    "capcode": data.capcode
-                                }),
-                                success: function (data) {
-                                    console.log(data)
-                                    if (data.code === 0) {
-                                        $this.getsuccess("验证通过");
-                                        setTimeout(function () {
-                                            createcode();
-                                        }, 1000);
-                                    } else {
-                                        if (data.code === 4) {
-                                            createcode();
-                                        } else if (data.code === 3) {
-                                            $this.getfail("验证码过期,请刷新");
-                                        } else {
-                                            $this.getfail("验证不通过");
-                                        }
-                                    }
-                                }
-                            })
-                        }
-                    });
-                }
-            }
-        })
-    }
 </script>
 </body>
 </html>

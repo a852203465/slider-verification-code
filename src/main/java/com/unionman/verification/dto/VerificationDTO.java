@@ -12,9 +12,19 @@ import java.io.Serializable;
 @Data
 public class VerificationDTO implements Serializable {
 
-    private Integer xpos;
+    /**
+     *  滑块位置
+     */
+    private Double xpos;
 
-    private String capcode;
+    /**
+     *  账号
+     */
+    private String username;
 
+    /**
+     *  密码
+     */
+    private String password;
 
 }

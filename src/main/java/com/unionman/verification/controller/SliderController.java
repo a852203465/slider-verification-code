@@ -1,7 +1,6 @@
 package com.unionman.verification.controller;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.utils.StringUtils;
 import com.unionman.verification.dto.VerificationDTO;
 import com.unionman.verification.utils.RedisUtils;
 import com.unionman.verification.utils.VerifyImageUtils;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 滑块验证码控制层
@@ -37,9 +34,9 @@ public class SliderController {
         return "index";
     }
 
-    @GetMapping("getPic")
+    @GetMapping("getPic/{account}")
     @ResponseBody
-    public ResponseVO<VerificationVO> getPic(HttpServletRequest request) throws IOException {
+    public ResponseVO<VerificationVO> getPic(@PathVariable("account") String account, HttpServletRequest request) throws IOException {
 
         // 读取图库目录
         File imgCatalog = new File(ResourceUtils.getURL("classpath:").getPath() + "static\\img\\slider\\targets\\");
@@ -56,12 +53,8 @@ public class SliderController {
         try {
 
             VerificationVO verificationVO = VerifyImageUtils.pictureTemplatesCut(tempImgFile, targetFile);
-            // 生成流水号，这里就使用时间戳代替
-            String lno =  String.valueOf(Calendar.getInstance().getTimeInMillis());
 
-            redisUtils.set(lno, verificationVO.getXWidth(), 120);
-
-            verificationVO.setCapcode(lno);
+            redisUtils.set(account, verificationVO.getXWidth(), 120);
 
             // 移除横坐标送前端
             verificationVO.setXWidth(null);
@@ -80,27 +73,59 @@ public class SliderController {
 
         log.info("checkCapcode {}", verificationDTO.toString());
 
-        ResponseVO responseVO;
+        String username = verificationDTO.getUsername();
+        String password = verificationDTO.getPassword();
 
-        Object x = redisUtils.get(verificationDTO.getCapcode());
+        if (StringUtils.isBlank(username)) {
+
+            log.error("账号为空");
+
+            return ResponseVO.error(4, "账号为空");
+        }
+
+        if (!StringUtils.equals("admin", verificationDTO.getUsername())) {
+
+            log.error("账号不正确");
+
+            return ResponseVO.error(8, "账号不正确");
+        }
+
+        if (StringUtils.isBlank(password)) {
+
+            log.error("密码为空");
+
+            return ResponseVO.error(5, "密码为空");
+        }
+
+        if (!StringUtils.equals("123456", verificationDTO.getPassword())) {
+
+            log.error("密码不正确");
+
+            return ResponseVO.error(6, "密码不正确");
+        }
+
+        if (verificationDTO.getXpos() == null) {
+             log.error("验证码为空");
+            return ResponseVO.error(7, "验证码为空");
+        }
+
+        Object x = redisUtils.get(username);
 
         if (x == null) {
 
             // 超期
-            responseVO = ResponseVO.error(3, "验证码过时");
-        } else if (verificationDTO.getXpos() - Integer.parseInt(x.toString()) > 5 || verificationDTO.getXpos() - Integer.parseInt(x.toString()) < -5) {
+            return ResponseVO.error(3, "验证码过时");
+        } else if (verificationDTO.getXpos() - Double.valueOf(x.toString()) > 5 || verificationDTO.getXpos() - Double.valueOf(x.toString()) < - 5) {
 
             // 验证失败
-            responseVO = ResponseVO.error(2, "验证失败");
+            return ResponseVO.error(2, "验证失败");
         } else {
 
             // 验证成功
-            responseVO = ResponseVO.success();
-
-            redisUtils.del(verificationDTO.getCapcode());
+            redisUtils.del(username);
+            return ResponseVO.success();
         }
 
-        return responseVO;
     }
 
 
