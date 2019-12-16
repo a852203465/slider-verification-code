@@ -1,5 +1,6 @@
 package com.unionman.verification.controller;
 
+import com.github.io.resource.ClassPathResource;
 import com.github.utils.StringUtils;
 import com.unionman.verification.dto.VerificationDTO;
 import com.unionman.verification.utils.RedisUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 /**
@@ -39,7 +41,8 @@ public class SliderController {
     public ResponseVO<VerificationVO> getPic(@PathVariable("account") String account, HttpServletRequest request) throws IOException {
 
         // 读取图库目录
-        File imgCatalog = new File(ResourceUtils.getURL("classpath:").getPath() + "static\\img\\slider\\targets\\");
+        ClassPathResource classPathResource = new ClassPathResource("static/img/slider/targets");
+        File imgCatalog = classPathResource.getFile();
         File[] files = imgCatalog.listFiles();
         // 随机选择需要切的图
         int randNum = new Random().nextInt(files.length);
@@ -47,8 +50,9 @@ public class SliderController {
         // 随机选择剪切模版
         Random r = new Random();
         int num = r.nextInt(6) + 1;
-        File tempImgFile = new File(ResourceUtils.getURL("classpath:").getPath() + "static\\img\\slider\\templates\\" + num
-                + "-w.png");
+        ClassPathResource classPathResource1 = new ClassPathResource("static/img/slider/templates/" + num+ "-w.png");
+        File tempImgFile = classPathResource1.getFile();
+
         // 根据模板裁剪图片
         try {
 
