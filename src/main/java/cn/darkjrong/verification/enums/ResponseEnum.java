@@ -1,4 +1,4 @@
-package com.unionman.verification.enums;
+package cn.darkjrong.verification.enums;
 
 import org.springframework.http.HttpStatus;
 

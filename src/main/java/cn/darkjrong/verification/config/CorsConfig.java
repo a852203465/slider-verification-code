@@ -1,4 +1,4 @@
-package com.unionman.verification.config;
+package cn.darkjrong.verification.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

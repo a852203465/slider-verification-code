@@ -1,4 +1,4 @@
-package com.unionman.verification.config;
+package cn.darkjrong.verification.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

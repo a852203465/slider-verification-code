@@ -1,4 +1,4 @@
-package com.unionman.verification.utils;
+package cn.darkjrong.verification.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

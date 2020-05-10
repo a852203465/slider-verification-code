@@ -1,7 +1,7 @@
-package com.unionman.verification.vo;
+package cn.darkjrong.verification.vo;
 
+import cn.darkjrong.verification.enums.ResponseEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.unionman.verification.enums.ResponseEnum;
 import lombok.Data;
 
 import java.io.Serializable;

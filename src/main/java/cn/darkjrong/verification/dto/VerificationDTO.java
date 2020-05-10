@@ -1,4 +1,4 @@
-package com.unionman.verification.dto;
+package cn.darkjrong.verification.dto;
 
 import lombok.Data;
 

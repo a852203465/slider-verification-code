@@ -1,9 +1,9 @@
-package com.unionman.verification.config;
+package cn.darkjrong.verification.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.unionman.verification.utils.RedisUtils;
+import cn.darkjrong.verification.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;

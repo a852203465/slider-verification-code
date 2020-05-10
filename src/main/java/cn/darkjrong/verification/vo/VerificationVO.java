@@ -1,4 +1,4 @@
-package com.unionman.verification.vo;
+package cn.darkjrong.verification.vo;
 
 import lombok.Data;
 

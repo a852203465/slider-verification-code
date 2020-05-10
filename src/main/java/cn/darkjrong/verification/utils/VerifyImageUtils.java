@@ -1,7 +1,7 @@
-package com.unionman.verification.utils;
+package cn.darkjrong.verification.utils;
 
 import com.github.codec.Base64;
-import com.unionman.verification.vo.VerificationVO;
+import cn.darkjrong.verification.vo.VerificationVO;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
@@ -9,9 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**

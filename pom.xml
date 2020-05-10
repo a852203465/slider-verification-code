@@ -8,7 +8,7 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.unionman</groupId>
+    <groupId>cn.darkjrong</groupId>
     <artifactId>slider-verification-code</artifactId>
     <version>1.0</version>
     <name>slider-verification-code</name>

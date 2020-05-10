@@ -1,22 +1,20 @@
-package com.unionman.verification.controller;
+package cn.darkjrong.verification.controller;
 
 import com.github.io.resource.ClassPathResource;
 import com.github.utils.StringUtils;
-import com.unionman.verification.dto.VerificationDTO;
-import com.unionman.verification.utils.RedisUtils;
-import com.unionman.verification.utils.VerifyImageUtils;
-import com.unionman.verification.vo.ResponseVO;
-import com.unionman.verification.vo.VerificationVO;
+import cn.darkjrong.verification.dto.VerificationDTO;
+import cn.darkjrong.verification.utils.RedisUtils;
+import cn.darkjrong.verification.utils.VerifyImageUtils;
+import cn.darkjrong.verification.vo.ResponseVO;
+import cn.darkjrong.verification.vo.VerificationVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 /**
