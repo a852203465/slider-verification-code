@@ -34,6 +34,11 @@ public class SliderController {
         return "index";
     }
 
+    @RequestMapping("/home")
+    public String home() {
+        return "home";
+    }
+
     @GetMapping("getPic/{account}")
     @ResponseBody
     public ResponseVO<VerificationVO> getPic(@PathVariable("account") String account, HttpServletRequest request) throws IOException {

@@ -1,0 +1,9 @@
+#clock {
+	margin:auto;
+	width:500px;
+	position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-250px;
+    margin-top:-250px;
+}

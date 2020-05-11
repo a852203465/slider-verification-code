@@ -80,7 +80,7 @@ function checkCapCode(response) {
 
     if (code === 0) {
         getSuccess("验证通过");
-        window.location.reload();
+        window.location.href = "home.html";
     } else {
         if (code ===6 ) {
             $(".err-password").html('老兄！！你密码不正确呢！！！！');
