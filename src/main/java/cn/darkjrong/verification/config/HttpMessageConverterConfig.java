@@ -13,10 +13,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.utils.CharsetUtils.UTF_8;
+import static cn.hutool.core.util.CharsetUtil.UTF_8;
 
 /**
  * 自定义消息转换器
@@ -28,7 +29,7 @@ import static com.github.utils.CharsetUtils.UTF_8;
 public class HttpMessageConverterConfig {
 
     /**
-     * @descrption: http消息转换器。
+     *  http消息转换器。
      * @author Rong.Jia
      * @date 2019/01/07 25:16:44
      * @return StringHttpMessageConverter
@@ -36,7 +37,7 @@ public class HttpMessageConverterConfig {
     @Bean
     public StringHttpMessageConverter stringHttpMessageConverter() {
 
-        return new StringHttpMessageConverter(Charset.forName(UTF_8));
+        return new StringHttpMessageConverter(StandardCharsets.UTF_8);
 
     }
 

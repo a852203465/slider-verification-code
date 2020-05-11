@@ -1,12 +1,12 @@
 package cn.darkjrong.verification.controller;
 
-import com.github.io.resource.ClassPathResource;
-import com.github.utils.StringUtils;
 import cn.darkjrong.verification.dto.VerificationDTO;
 import cn.darkjrong.verification.utils.RedisUtils;
 import cn.darkjrong.verification.utils.VerifyImageUtils;
 import cn.darkjrong.verification.vo.ResponseVO;
 import cn.darkjrong.verification.vo.VerificationVO;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,31 +78,27 @@ public class SliderController {
         String username = verificationDTO.getUsername();
         String password = verificationDTO.getPassword();
 
-        if (StringUtils.isBlank(username)) {
+        if (StrUtil.isBlank(username)) {
 
             log.error("账号为空");
-
             return ResponseVO.error(4, "账号为空");
         }
 
-        if (!StringUtils.equals("admin", verificationDTO.getUsername())) {
+        if (!StrUtil.equals("admin", verificationDTO.getUsername())) {
 
             log.error("账号不正确");
-
             return ResponseVO.error(8, "账号不正确");
         }
 
-        if (StringUtils.isBlank(password)) {
+        if (StrUtil.isBlank(password)) {
 
             log.error("密码为空");
-
             return ResponseVO.error(5, "密码为空");
         }
 
-        if (!StringUtils.equals("123456", verificationDTO.getPassword())) {
+        if (!StrUtil.equals("123456", verificationDTO.getPassword())) {
 
             log.error("密码不正确");
-
             return ResponseVO.error(6, "密码不正确");
         }
 
@@ -117,7 +113,7 @@ public class SliderController {
 
             // 超期
             return ResponseVO.error(3, "验证码过时");
-        } else if (verificationDTO.getXpos() - Double.valueOf(x.toString()) > 5 || verificationDTO.getXpos() - Double.valueOf(x.toString()) < - 5) {
+        } else if (verificationDTO.getXpos() - Double.parseDouble(x.toString()) > 5 || verificationDTO.getXpos() - Double.parseDouble(x.toString()) < - 5) {
 
             // 验证失败
             return ResponseVO.error(2, "验证失败");
