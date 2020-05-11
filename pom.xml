@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.darkjrong</groupId>
-    <artifactId>foundation-release</artifactId>
+    <artifactId>slider-verification-code</artifactId>
     <version>1.0</version>
-    <name>foundation-release</name>
+    <name>slider-verification-code</name>
     <description>滑块验证码</description>
 
     <properties>
