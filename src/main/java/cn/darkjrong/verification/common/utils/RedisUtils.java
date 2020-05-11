@@ -1,4 +1,4 @@
-package cn.darkjrong.verification.utils;
+package cn.darkjrong.verification.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

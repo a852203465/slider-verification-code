@@ -1,4 +1,4 @@
-package cn.darkjrong.verification.dto;
+package cn.darkjrong.verification.common.pojo.dto;
 
 import lombok.Data;
 

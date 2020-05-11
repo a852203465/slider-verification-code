@@ -1,4 +1,4 @@
-package cn.darkjrong.verification.config;
+package cn.darkjrong.verification.common.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

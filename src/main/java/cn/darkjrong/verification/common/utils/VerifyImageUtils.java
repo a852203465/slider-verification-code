@@ -1,6 +1,6 @@
-package cn.darkjrong.verification.utils;
+package cn.darkjrong.verification.common.utils;
 
-import cn.darkjrong.verification.vo.VerificationVO;
+import cn.darkjrong.verification.common.pojo.vo.VerificationVO;
 import cn.hutool.core.codec.Base64;
 import lombok.extern.slf4j.Slf4j;
 

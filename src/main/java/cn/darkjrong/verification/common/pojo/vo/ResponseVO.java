@@ -1,6 +1,6 @@
-package cn.darkjrong.verification.vo;
+package cn.darkjrong.verification.common.pojo.vo;
 
-import cn.darkjrong.verification.enums.ResponseEnum;
+import cn.darkjrong.verification.common.enums.ResponseEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 

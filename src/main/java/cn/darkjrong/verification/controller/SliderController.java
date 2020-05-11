@@ -1,10 +1,10 @@
 package cn.darkjrong.verification.controller;
 
-import cn.darkjrong.verification.dto.VerificationDTO;
-import cn.darkjrong.verification.utils.RedisUtils;
-import cn.darkjrong.verification.utils.VerifyImageUtils;
-import cn.darkjrong.verification.vo.ResponseVO;
-import cn.darkjrong.verification.vo.VerificationVO;
+import cn.darkjrong.verification.common.pojo.dto.VerificationDTO;
+import cn.darkjrong.verification.common.utils.RedisUtils;
+import cn.darkjrong.verification.common.utils.VerifyImageUtils;
+import cn.darkjrong.verification.common.pojo.vo.ResponseVO;
+import cn.darkjrong.verification.common.pojo.vo.VerificationVO;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class SliderController {
     @Autowired
     private RedisUtils redisUtils;
 
-    @RequestMapping("index")
+    @RequestMapping("/")
     public String index() {
         return "index";
     }
