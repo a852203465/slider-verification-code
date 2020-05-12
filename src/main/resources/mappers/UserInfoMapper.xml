@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.darkjrong.verification.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.darkjrong.verification.common.pojo.entity.UserInfo" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="telephone" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, account, password, email, telephone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from djr_t_users
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from djr_t_users
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.darkjrong.verification.common.pojo.entity.UserInfo" >
+    insert into djr_t_users (id, name, account, 
+      password, email, telephone
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.darkjrong.verification.common.pojo.entity.UserInfo" >
+    insert into djr_t_users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.darkjrong.verification.common.pojo.entity.UserInfo" >
+    update djr_t_users
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.darkjrong.verification.common.pojo.entity.UserInfo" >
+      update djr_t_users
+      set name = #{name,jdbcType=VARCHAR},
+        account = #{account,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        telephone = #{telephone,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findUserInfoByAccount" resultMap="BaseResultMap">
+      select
+        <include refid="Base_Column_List"/>
+      from djr_t_users
+      where account = #{account,jdbcType=VARCHAR}
+    </select>
+    <update id="modifyPwdById">
+        update djr_t_users set password = #{password,jdbcType=VARCHAR} where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findUserInfos" resultType="cn.darkjrong.verification.common.pojo.entity.UserInfo">
+      select
+        <include refid="Base_Column_List"/>
+      from djr_t_users
+      <where>
+        <if test="name != null and name != ''">
+          name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="telephone != null and telephone != ''">
+          AND telephone   like concat('%', #{telephone,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="notAccount != null and notAccount != ''">
+          AND account != #{notAccount,jdbcType=VARCHAR}
+        </if>
+      </where>
+    </select>
+</mapper>

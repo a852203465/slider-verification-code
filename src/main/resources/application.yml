@@ -71,7 +71,8 @@ spring:
     filters: stat,wall,slf4j
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
- #   schema:
+    schema:
+      - classpath:sql/slider_verification_code.sql
 
 mybatis:
   # 映射文件所在路径
@@ -93,3 +94,9 @@ key-plugin:
   enabled: true
   key-type: 2
 
+# 权限
+auth:
+  # AES密码加密私钥(Base64加密)
+  encryptAESKey: F4CL+Xa9KY7h0kJFrpQjeg==
+  #JWT认证加密私钥(Base64加密)
+  encryptJWTKey:  U0JBUElKV1RkV2FuZzkyNjQ1NA==

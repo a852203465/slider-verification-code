@@ -7,7 +7,7 @@ var xPos = '';
 //显示验证码
 function createCode() {
     var username = $(".username").val();
-    $.get("/getPic/" + username, function (success) {
+    $.get("/verificationCode/" + username, function (success) {
         var data = success.data;
         console.info("response : ", data);
         $(".code-front-img").attr('src',  'data:image/jpg;base64,' + data.slidingImage);
@@ -35,7 +35,13 @@ function submit() {
         $(".err-username").html('老兄！！你用户名呢！？？？');
         return;
     }else {
-        $(".err-username").html('');
+        $.get("/checkUser/" + username, function (success) {
+            if (success.code !== 0) {
+                $(".err-username").html(success.message);
+            }else {
+                $(".err-username").html("");
+            }
+        });
     }
 
     // 判断密码
@@ -54,14 +60,14 @@ function submit() {
 
     // 参数
     var request = {
-        "xpos": xPos,
-        "username": username,
+        "xPos": xPos,
+        "account": username,
         "password": password
     };
 
     $.ajax({
         type: 'POST',
-        url: '/checkcapcode',
+        url: '/login',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(request),
@@ -82,15 +88,7 @@ function checkCapCode(response) {
         getSuccess("验证通过");
         window.location.href = "home.html";
     } else {
-        if (code ===6 ) {
-            $(".err-password").html('老兄！！你密码不正确呢！！！！');
-        } else if (code === 8) {
-            $(".err-username").html('老兄！！你账号不正确呢！？？？');
-        } else if (code === 3) {
-            getFailure("验证码过期,请刷新");
-        } else {
-            getFailure("验证不通过");
-        }
+        getFailure(response.message);
     }
 
     xPos = '';

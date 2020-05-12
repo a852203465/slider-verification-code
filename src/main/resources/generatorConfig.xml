@@ -18,7 +18,7 @@
     <context id="default" targetRuntime="MyBatis3">
 
         <!-- 格式化java代码 -->
-        <property name="javaFormater" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
 
         <!-- 格式化xml代码 -->
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
@@ -81,7 +81,7 @@
         <!--
         <table tableName="um_t_user_role" domainObjectName="UserRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         -->
-        <table tableName="um_t_role_permission" domainObjectName="RolePermission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="djr_t_users" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
     </context>
 </generatorConfiguration>
