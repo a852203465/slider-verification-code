@@ -3,7 +3,7 @@ package cn.darkjrong.verification.common.enums;
 import org.springframework.http.HttpStatus;
 
 /**
- * @description: 数据信息状态枚举类
+ * 数据信息状态枚举类
  * @author Rong.Jia
  * @date 2019/4/2
  */

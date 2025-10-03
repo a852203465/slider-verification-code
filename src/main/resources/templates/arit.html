@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算术验证码</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #captchaImage {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+        #refreshCaptcha {
+            margin-left: 10px;
+            background-color: #2196F3;
+        }
+        #refreshCaptcha:hover {
+            background-color: #1976D2;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>算术验证码</h2>
+
+    <div class="form-group">
+        <label>验证码：</label>
+        <div class="captcha-container">
+            <img id="captchaImage" src="" alt="验证码">
+            <button id="refreshCaptcha">刷新</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="answer">请输入计算结果：</label>
+        <input type="text" id="answer" placeholder="请输入计算结果">
+    </div>
+
+    <!-- 隐藏的验证码ID字段 -->
+    <input type="hidden" id="captchaId" value="">
+
+    <button id="submitBtn">提交验证</button>
+
+    <div id="message" class="message"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const captchaImage = document.getElementById('captchaImage');
+        const refreshBtn = document.getElementById('refreshCaptcha');
+        const answerInput = document.getElementById('answer');
+        const submitBtn = document.getElementById('submitBtn');
+        const messageDiv = document.getElementById('message');
+        const captchaIdInput = document.getElementById('captchaId');
+
+        function loadCaptcha() {
+            $.get("/arithmetic/getCaptcha", function (success) {
+                var data = success.data;
+                console.info("response : ", data);
+                captchaImage.src = data.originalImage;
+                captchaIdInput.value = data.captchaId;
+            })
+        }
+
+        // 初始化加载验证码
+        loadCaptcha();
+
+        // 刷新验证码
+        refreshBtn.addEventListener('click', function() {
+            loadCaptcha();
+            answerInput.value = '';
+            messageDiv.style.display = 'none';
+        });
+
+        // 提交验证
+        submitBtn.addEventListener('click', function() {
+            const answer = answerInput.value.trim();
+            const captchaId = captchaIdInput.value;
+
+            if (!answer) {
+                showMessage('请输入计算结果', 'error');
+                return;
+            }
+
+            if (!captchaId) {
+                showMessage('验证码已过期，请刷新', 'error');
+                loadCaptcha();
+                return;
+            }
+
+            // 发送验证请求
+            var request = {
+                "captchaId": captchaId,
+                "userAnswer": answer,
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/arithmetic/validate',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(request),
+                success: function (response) {
+                    checkCapCode(response);
+                }
+            });
+        });
+
+        function checkCapCode(response) {
+            console.info(response);
+            var code = response.code;
+            if (code === 0) {
+                showMessage('验证成功！', 'success');
+                setTimeout(function () {
+                    loadCaptcha();
+                    messageDiv.style.display = 'none';
+                }, 1000);
+            } else {
+                showMessage('验证失败，请重试', 'error');
+                loadCaptcha();
+                answerInput.value = '';
+            }
+        }
+
+        // 显示消息
+        function showMessage(message, type) {
+            messageDiv.textContent = message;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

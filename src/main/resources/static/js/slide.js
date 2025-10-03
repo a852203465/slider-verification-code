@@ -3,71 +3,44 @@
  */
 
 var xPos = '';
-
 //显示验证码
 function createCode() {
-    var username = $(".username").val();
-    $.get("/verificationCode/" + username, function (success) {
+    $.get("/slider/getCaptcha", function (success) {
         var data = success.data;
         console.info("response : ", data);
         $(".code-front-img").attr('src',  'data:image/jpg;base64,' + data.slidingImage);
         $(".code-back-img").attr('src',  'data:image/png;base64,' + data.originalImage);
-        $(".code-mask").css("margin-top",data.yHeight+"px");
+        $(".code-mask").css("margin-top", data.yHeight + "px");
+        $('.code-k-div').attr('captchaId', data.captchaId);
         styleDealWith();
-
     })
 }
 
 // 刷新验证码
 function refreshCallback() {
-
     createCode();
+    styleDealWith();
 }
 
 //  操作验证码信息  msg: 用户操作信息
 function submit() {
-
-    var username = $(".username").val();
-    var password = $(".password").val();
-
-    // 判断账号是否为空
-    if (username === '') {
-        $(".err-username").html('老兄！！你用户名呢！？？？');
-        return;
-    }else {
-        $.get("/checkUser/" + username, function (success) {
-            if (success.code !== 0) {
-                $(".err-username").html(success.message);
-            }else {
-                $(".err-username").html("");
-            }
-        });
-    }
-
-    // 判断密码
-    if (password === '') {
-        $(".err-password").html('老兄！！你密码呢！？？？');
-        return;
-    }else {
-        $(".err-password").html('');
-    }
-
     // 判断验证码
     if (xPos === '') {
         checkCodeResult(0, "老兄！！滑动一下滑块吧！！！");
         return;
     }
 
-    // 参数
+    var captchaId = $('.code-k-div').attr('captchaId');
     var request = {
         "xPos": xPos,
-        "account": username,
-        "password": password
+        "captchaId": captchaId,
     };
+
+    console.log("参数", request);
 
     $.ajax({
         type: 'POST',
-        url: '/login',
+        url: '/slider/validate',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(request),
@@ -79,26 +52,19 @@ function submit() {
 
 // 验证
 function checkCapCode(response) {
-
     console.info(response);
-
     var code = response.code;
-
     if (code === 0) {
         getSuccess("验证通过");
-        window.location.href = "home.html";
     } else {
         getFailure(response.message);
     }
-
     xPos = '';
 }
 
 // 样式处理
 function styleDealWith() {
-
     var $this = $("#imgscode");
-
     // 定义拖动参数
     var $divMove = $($this).find(".code-btn-img"); // 拖动按钮
     var $divWrap = $($this).find(".code-btn");// 鼠标可拖拽区域
@@ -180,8 +146,8 @@ function styleDealWith() {
 function getSuccess() {
     checkCodeResult(1, "验证通过");
     setTimeout(function () {
-        $("#imgscode").find(".code-k-div").remove();
-    }, 800);
+        window.location.reload();
+    }, 1000);
 }
 
 // 验证结果
@@ -197,12 +163,9 @@ function checkCodeResult(i, txt) {
 
 // 验证失败
 function getFailure(txt) {
-
     var $divMove = $("#imgscode").find(".code-btn-img"); // 拖动按钮
-
     $divMove.addClass("error");
     checkCodeResult(0, txt);
-
     setTimeout(function () {
         $divMove.removeClass("error");
 

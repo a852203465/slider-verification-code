@@ -14,6 +14,8 @@ public class VerificationVO implements Serializable {
 
     private static final long serialVersionUID = 4061633295778293743L;
 
+    private String captchaId;
+
     /**
      *  滑块图
      */

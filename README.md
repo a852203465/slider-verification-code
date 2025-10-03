@@ -1,11 +1,29 @@
-## 前后端滑块验证码实例附源码（java jquery）
+# 图片验证码服务
 
-## 修改配置
-修改resouces下datasource.properties，application.yml中的DB配置
+## 实现方式
+    - 滑块验证码
+    - 算术验证码
 
-### 访问
-http://localhost:8080
+## 访问方式
+### 滑块验证码
+    - http://localhost:8080/arit
 
-### 账号密码
-admin
-123456
+### 算术验证码
+    - http://localhost:8080/slider
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

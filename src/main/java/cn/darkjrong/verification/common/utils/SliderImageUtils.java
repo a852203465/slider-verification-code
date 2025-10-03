@@ -15,15 +15,13 @@ import java.util.Random;
  * 滑块验证码生成工具类
  *
  * @author Rong.Jia
- * @date 2019/12/11 21:43:22
+ * @date 2025/10/03
  */
 @Slf4j
-public class VerifyImageUtils {
+public class SliderImageUtils {
 
     private static int BOLD = 5;
-
     private static final String IMG_FILE_TYPE = "jpg";
-
     private static final String TEMP_IMG_FILE_TYPE = "png";
 
     /**
